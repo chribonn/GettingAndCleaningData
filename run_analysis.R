@@ -240,6 +240,6 @@ if (file.exists("./data/tidyData.Rda")) {
     save(data, means, std, groupData, file = "./data/tidyData.Rda")
     
     # save groupData to a tidy data set
-    write.csv(groupData, "./data/tidyData.txt")
+    write.csv(groupData, "./data/tidyData.csv")
 }
 
