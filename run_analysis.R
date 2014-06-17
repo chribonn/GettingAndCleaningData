@@ -225,7 +225,7 @@ if (file.exists("./data/tidyData.Rda")) {
     groupData <- gData[with(gData, order(student.no, activity.ref)),]
     
     # Recreate the missing activity.desc column
-    groupData$activity.desc <- activityRef[2, groupData$activity.ref]
+    groupData$activity.desc <- unlist(activityRef[2, groupData$activity.ref])
     
     # and clean up
     rm(gData, dt, activityRef, featureCols, trainData, testData)
@@ -238,5 +238,8 @@ if (file.exists("./data/tidyData.Rda")) {
 
     # save the various objects to a file. This ensures that processing does not take place again if the code is run multiple times
     save(data, means, std, groupData, file = "./data/tidyData.Rda")
+    
+    # save groupData to a tidy data set
+    write.csv(groupData, "./data/tidyData.txt")
 }
 
