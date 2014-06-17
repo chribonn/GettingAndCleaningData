@@ -57,6 +57,9 @@ activityList <- function() {
     
     # split the list on the space
     data <- strsplit(data," ")
+    
+    # Capitalize only the first character of the description
+    data <- lapply(data, function(x) paste(substring(x[2], 1,1), tolower(substring(x[2], 2)), sep="", collapse=" "))
 }
 
 # returns a vector of the column names for the features data.
@@ -95,7 +98,7 @@ readSubject <- function(folder) {
     return(data)
 }
 
-# reads the activity information, appends a colum with the activity description and adds appropriate column heading. The result is returned to the calling module
+# reads the activity information, appends a column with the activity description and adds appropriate column heading. The result is returned to the calling module
 readActivity <- function(folder, activityRef) {   
     filePath <- paste0("./UCI HAR Dataset/", folder, "/y_", folder, ".txt")
     ydata <- read.table(filePath)
@@ -140,6 +143,7 @@ if (file.exists("./data/tidyData.Rda")) {
     if (tolower(ans) == "y") {
         file.remove("./data/tidyData.Rda")
     }
+    rm (ans)
 }
 
 # Since the archive is static code efficiency could be acheived by skipping
