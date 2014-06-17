@@ -90,7 +90,8 @@ When the program terminates all that remains are the tidy data requested by the 
 Generating the tidy data
 ------------------------
 
-1 The first stage was to read in the [activity (__./activity_labels.txt__) data][ref1] and split the data on the space separating the integer from the description.  
+<a name="ref1"></a>
+1 The first stage was to read in the [activity (__./activity_labels.txt__) data] and split the data on the space separating the integer from the description.  
 **_Tidy Data: The description was converted from block letters to Proper case_**
 
 2 The row headings for the various readings was read and a character vector was generated
@@ -101,8 +102,10 @@ and features (__./features.txt__) data.
  *  The subjects who participated in the analysis were read from (__./train/subject_train.txt__). There was one row for every record.   
 **_Tidy Data: The column name student.no was added to the processed information_**  
 
- * The activity list was read from (__./train/y_train.txt__). The data here was an integer. There was one row for every record. 
-**_Tidy Data: Another second column was added to the read data that cross referenced the integer with the corresponding description ([ref1]: see point 1)_**  
+ * The activity list was read from (__./train/y_train.txt__). The data here was an integer. There was one row for every record.  
+**_Tidy Data: The read column was called activity.ref_**.  
+**_Tidy Data: Another second column was added to the read data that cross referenced the integer with the corresponding description ([point 1](#ref1))_**.  
+**_Tidy Data: The added column was called activity.desc_**.
 
 
 ```{r}

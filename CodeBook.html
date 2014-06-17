@@ -369,7 +369,8 @@ hljs.initHighlightingOnLoad();
 
 <h2>Generating the tidy data</h2>
 
-<p>1 The first stage was to read in the [activity (<strong>./activity_labels.txt</strong>) data][ref1] and split the data on the space separating the integer from the description.<br/>
+<p><a name="ref1"></a>
+1 The first stage was to read in the [activity (<strong>./activity_labels.txt</strong>) data] and split the data on the space separating the integer from the description.<br/>
 <strong><em>Tidy Data: The description was converted from block letters to Proper case</em></strong></p>
 
 <p>2 The row headings for the various readings was read and a character vector was generated
@@ -380,8 +381,10 @@ and features (<strong>./features.txt</strong>) data. </p>
 <ul>
 <li><p>The subjects who participated in the analysis were read from (<strong>./train/subject_train.txt</strong>). There was one row for every record.<br/>
 <strong><em>Tidy Data: The column name student.no was added to the processed information</em></strong>  </p></li>
-<li><p>The activity list was read from (<strong>./train/y_train.txt</strong>). The data here was an integer. There was one row for every record. 
-<strong><em>Tidy Data: Another second column was added to the read data that cross referenced the integer with the corresponding description ([ref1]: see point 1)</em></strong>  </p></li>
+<li><p>The activity list was read from (<strong>./train/y_train.txt</strong>). The data here was an integer. There was one row for every record.<br/>
+<strong><em>Tidy Data: The read column was called activity.ref</em></strong>.<br/>
+<strong><em>Tidy Data: Another second column was added to the read data that cross referenced the integer with the corresponding description (<a href="#ref1">point 1</a>)</em></strong>.<br/>
+<strong><em>Tidy Data: The added column was called activity.desc</em></strong>.</p></li>
 </ul>
 
 <pre><code class="r">summary(cars)
