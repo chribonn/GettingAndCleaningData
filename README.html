@@ -156,6 +156,8 @@ hr {
 
 <p>The user would be prompted (if a pre-computed data file is found) whether he would like to use that data or recompute everything from scratch.</p>
 
+<p>Irrespective of whether the user opts to generate the data from raw information or load pre-saved files, the tidy data text file is always generated. This ensures that the required output is always generated.</p>
+
 <h3>Providing feedback</h3>
 
 <p>On a slow computer the processing could take some time. During this time the computer would appear to have hung. In order to cater for this situation, at strategic locations within the code, the user is informed of what is to be done next. </p>
@@ -271,6 +273,19 @@ hr {
     # Recreate the missing activity.desc column
     groupData$activity.desc &lt;- activityRef[2, groupData$activity.ref]
 </code></pre>
+
+<p>The code listed above summarises the data by student number and activity (sorting the data by these columns).</p>
+
+<h2>Reading the tidy data</h2>
+
+<p>As one of the requirements of the assignment was to have a human-readable format, the write.table function was used to write the resulting tidy data.</p>
+
+<p>The command issued to write the data is</p>
+
+<pre><code>    write.table(groupData, &quot;./data/tidyData.txt&quot;, row.names = FALSE)
+</code></pre>
+
+<p>Use the command <code>groupData  &lt;- read.table(&quot;./data/tidyData.txt&quot;, header=TRUE)</code> to load the tidy data file.</p>
 
 </body>
 

@@ -237,9 +237,10 @@ if (file.exists("./data/tidyData.Rda")) {
     }
 
     # save the various objects to a file. This ensures that processing does not take place again if the code is run multiple times
-    save(data, means, std, groupData, file = "./data/tidyData.Rda")
-    
-    # save groupData to a tidy data set
-    write.table(groupData, "./data/tidyData.txt")
+    save(data, means, std, groupData, file = "./data/tidyData.Rda")    
 }
+
+# Save groupData to a tidy data set. This is done everytime irrespective of
+# whether the data is generated or automatically read.
+write.table(groupData, "./data/tidyData.txt", row.names = FALSE)
 

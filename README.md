@@ -10,6 +10,8 @@ Given the static nature of the data (a downloaded zip file) it was decided that 
 
 The user would be prompted (if a pre-computed data file is found) whether he would like to use that data or recompute everything from scratch.
 
+Irrespective of whether the user opts to generate the data from raw information or load pre-saved files, the tidy data text file is always generated. This ensures that the required output is always generated.
+
 ### Providing feedback
 
 On a slow computer the processing could take some time. During this time the computer would appear to have hung. In order to cater for this situation, at strategic locations within the code, the user is informed of what is to be done next. 
@@ -102,3 +104,16 @@ The above function computes the standard deviation for those columns of the data
 ```
 
 The code listed above summarises the data by student number and activity (sorting the data by these columns).
+
+Reading the tidy data
+---------------------
+
+As one of the requirements of the assignment was to have a human-readable format, the write.table function was used to write the resulting tidy data.
+
+The command issued to write the data is
+
+```
+    write.table(groupData, "./data/tidyData.txt", row.names = FALSE)
+```
+
+Use the command `groupData  <- read.table("./data/tidyData.txt", header=TRUE)` to load the tidy data file.
