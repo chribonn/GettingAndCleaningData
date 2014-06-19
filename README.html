@@ -137,10 +137,6 @@ hr {
 
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 
 
 </head>
@@ -207,7 +203,7 @@ hr {
 </tr>
 <tr>
 <td>featureList()</td>
-<td>Returns a vector of the column names for the features data</td>
+<td>Returns a vector of the column names for the features data. It performs replaces all dashes with dots.</td>
 <td>Main()</td>
 </tr>
 <tr>
@@ -217,17 +213,17 @@ hr {
 </tr>
 <tr>
 <td>readSubject(folder)</td>
-<td>Reads the subject information from folder, adds appropriate column titles and return the data frame to the calling module</td>
+<td>Reads the subject information from folder, adding the column title <strong>student.no</strong> and returns the data frame to the calling module</td>
 <td>combine(folder, activityRef, featureCols)</td>
 </tr>
 <tr>
 <td>readActivityfolder, activityRef)</td>
-<td>Reads the activity information, appends a column with the activity description and adds appropriate column heading. The resulting data frame is returned to the calling module</td>
+<td>Reads the activity information, and titles the column <strong>activity.ref</strong>. It also adds a column titled <strong>activity.desc</strong> with the computed activity descriptions. The resulting data frame is returned to the calling module</td>
 <td>combine(folder, activityRef, featureCols)</td>
 </tr>
 <tr>
 <td>readFeatures(folder, featureCols)</td>
-<td>Reads the features information found in a particular folder. Returns a data frame with the column names describing the data</td>
+<td>Reads the features information found in a particular folder. Returns a subset of the data containing only those columns that contain <strong>-mean()</strong> and <strong>-std()</strong> in their name.</td>
 <td>combine(folder, activityRef, featureCols)</td>
 </tr>
 </tbody></table>
@@ -240,20 +236,6 @@ hr {
 </code></pre>
 
 <p>The rbind function is used to combine the training and test data frames into one.</p>
-
-<hr/>
-
-<pre><code>means &lt;- lapply(&quot;-mean\\(\\)&quot;, function(name) { apply(data[,grep(name, names(data))], 2, mean)})
-</code></pre>
-
-<p>The above function computes the mean for those columns of the data that have the phrase &#39;-mean()&#39; in the column name. </p>
-
-<hr/>
-
-<pre><code> std &lt;-  lapply(&quot;-std\\(\\)&quot;, function(name) { apply(data[,grep(name, names(data))], 2, sd)})
-</code></pre>
-
-<p>The above function computes the standard deviation for those columns of the data that have the phrase &#39;-std()&#39; in the column name.</p>
 
 <hr/>
 
@@ -282,10 +264,10 @@ hr {
 
 <p>The command issued to write the data is</p>
 
-<pre><code>    write.table(groupData, &quot;./data/tidyData.txt&quot;, row.names = FALSE)
+<pre><code>    write.table(groupData, &quot;./data/tidyData.txt&quot;, row.names = FALSE, sep=&quot;\t&quot;, quote=FALSE)
 </code></pre>
 
-<p>Use the command <code>groupData  &lt;- read.table(&quot;./data/tidyData.txt&quot;, header=TRUE)</code> to load the tidy data file.</p>
+<p>Use the command <code>groupData  &lt;- read.table(&quot;./data/tidyData.txt&quot;, header=TRUE, sep=&quot;\t&quot;, quote=FALSE)</code> to load the tidy data file.</p>
 
 </body>
 

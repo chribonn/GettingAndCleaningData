@@ -48,11 +48,11 @@ Module name | Notes | Called by
 ----------- | ----- | ---------
 _Main()_ | This module performs the data tidying process and leaves a number of objects that represent the cleaned data |
 activityList() | Returns a list of the activity number and description formatted as Proper case | Main()
-featureList() | Returns a vector of the column names for the features data  | Main()
+featureList() | Returns a vector of the column names for the features data. It performs replaces all dashes with dots.  | Main()
 combine(folder, activityRef, featureCols) | This module will process the files stored in folder and will build up a data frame of the data built up from the various files. This module will combine data from the test and training modules into one data frame. It will also generate the other tidy data requested in the assignment | Main()
-readSubject(folder) | Reads the subject information from folder, adds appropriate column titles and return the data frame to the calling module | combine(folder, activityRef, featureCols)
-readActivityfolder, activityRef) | Reads the activity information, appends a column with the activity description and adds appropriate column heading. The resulting data frame is returned to the calling module | combine(folder, activityRef, featureCols)
-readFeatures(folder, featureCols) | Reads the features information found in a particular folder. Returns a data frame with the column names describing the data | combine(folder, activityRef, featureCols)
+readSubject(folder) | Reads the subject information from folder, adding the column title __student.no__ and returns the data frame to the calling module | combine(folder, activityRef, featureCols)
+readActivityfolder, activityRef) | Reads the activity information, and titles the column __activity.ref__. It also adds a column titled __activity.desc__ with the computed activity descriptions. The resulting data frame is returned to the calling module | combine(folder, activityRef, featureCols)
+readFeatures(folder, featureCols) | Reads the features information found in a particular folder. Returns a subset of the data containing only those columns that contain __-mean()__ and __-std()__ in their name. | combine(folder, activityRef, featureCols)
 
 
 Analysing Main()
@@ -65,23 +65,6 @@ data <- rbind(trainData, testData)
 ```
 
 The rbind function is used to combine the training and test data frames into one.
-
----
-
-
-```
-means <- lapply("-mean\\(\\)", function(name) { apply(data[,grep(name, names(data))], 2, mean)})
-```
-    
-The above function computes the mean for those columns of the data that have the phrase '-mean()' in the column name. 
-
----
-
-```
- std <-  lapply("-std\\(\\)", function(name) { apply(data[,grep(name, names(data))], 2, sd)})
-```
-
-The above function computes the standard deviation for those columns of the data that have the phrase '-std()' in the column name.
 
 ---
 
@@ -113,7 +96,7 @@ As one of the requirements of the assignment was to have a human-readable format
 The command issued to write the data is
 
 ```
-    write.table(groupData, "./data/tidyData.txt", row.names = FALSE)
+    write.table(groupData, "./data/tidyData.txt", row.names = FALSE, sep="\t", quote=FALSE)
 ```
 
-Use the command `groupData  <- read.table("./data/tidyData.txt", header=TRUE)` to load the tidy data file.
+Use the command `groupData  <- read.table("./data/tidyData.txt", header=TRUE, sep="\t", quote=FALSE)` to load the tidy data file.

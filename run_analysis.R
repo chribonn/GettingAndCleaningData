@@ -74,6 +74,9 @@ featureList <- function() {
     # Create a blank vector - improves overall code performance by pre allocating the number of rows
     c <- vector(mode = "character", length = length(data))
     
+    # tidy data: replace all dashes with dots
+    data <- gsub("-", ".", data)
+    
     # split the list on the space
     data <- strsplit(data," ")
     
@@ -110,14 +113,14 @@ readActivity <- function(folder, activityRef) {
     return(ydata)
 }
 
-
-# reads the features information. 
+# Reads the features information. Extracts only the data that has -mean() and
+# -std() in the column name
 readFeatures <- function(folder, featureCols) {
     filePath <- paste0("./UCI HAR Dataset/", folder, "/X_", folder, ".txt")
     fdata <- read.table(filePath)
     
     colnames(fdata) <- featureCols
-    
+    fdata <- fdata[,grep(".mean\\(\\)|.std\\(\\)", names(fdata))]
     return (fdata)
 }
 
@@ -186,22 +189,8 @@ if (file.exists("./data/tidyData.Rda")) {
 
     # Combine the two
     data <- rbind(trainData, testData)
-    
-    ##########  User Feedback
-    print ("Generating averages")
-
-    # Compute the mean for those columns of the data that have the phrase '-mean()'
-    # in the column name. The mean of the columnar data is worked out. The column names are 
-    # retained.
-    means <- lapply("-mean\\(\\)", function(name) { apply(data[,grep(name, names(data))], 2, mean)})
-    
-    ##########  User Feedback
-    print ("Generating standard deviation")
-
-    # Compute the standard deviation for those columns of the data that have the phrase '-std()'
-    # in the column name. The standard deviation of the columnar data is computed. The column names are 
-    # retained.
-    std <-  lapply("-std\\(\\)", function(name) { apply(data[,grep(name, names(data))], 2, sd)})
+    # tidy data: remove the '()' characters from column names
+    names(data) <- sub("\\(\\)","",names(data))
     
     ##########  User Feedback
     print ("Grouping data by student no and activity reference")
@@ -228,19 +217,19 @@ if (file.exists("./data/tidyData.Rda")) {
     groupData$activity.desc <- unlist(activityRef[2, groupData$activity.ref])
     
     # and clean up
-    rm(gData, dt, activityRef, featureCols, trainData, testData)
+    rm(gData, dt, activityRef, featureCols, trainData, testData, data)
     
-    
+
     # Create the folder if necessary
     if (!file.exists("./data")) {
         dir.create("./data")
     }
 
     # save the various objects to a file. This ensures that processing does not take place again if the code is run multiple times
-    save(data, means, std, groupData, file = "./data/tidyData.Rda")    
+    save(groupData, file = "./data/tidyData.Rda")    
 }
 
 # Save groupData to a tidy data set. This is done everytime irrespective of
 # whether the data is generated or automatically read.
-write.table(groupData, "./data/tidyData.txt", row.names = FALSE)
+write.table(groupData, "./data/tidyData.txt", row.names = FALSE, sep="\t", quote=FALSE)
 
